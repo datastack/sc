@@ -1,0 +1,13 @@
+- hosts: all
+  tasks:
+    - name: "Create a user and setup home directory"
+      user:
+        name: "{{ user_name }}"
+        comment: "User {{ user_name }} - Managed by Ansible"
+    - name: "Add new key to authorized keys"
+      authorized_key:
+        user: "{{ user_name }}"
+        state: present
+        key: "{{ item }}"
+      with_file:
+        - "{{ key_file }}"
